@@ -371,3 +371,223 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
         }
     }
 }
+
+// ── Top Navbar & Profile Options ──────────────────────────────────────────────
+.navbar {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+
+  &__brand {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: $accent;
+    letter-spacing: 0.5px;
+  }
+
+  &__user {
+    position: relative;
+
+    .profile-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: $bg-card;
+      border: 1px solid $border-color;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      color: $text-primary;
+      cursor: pointer;
+      transition: border-color 0.2s;
+
+      &:hover {
+        border-color: $accent;
+      }
+
+      .profile-avatar {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background-color: $accent;
+        color: white;
+        font-weight: 700;
+        font-size: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .profile-name {
+        font-size: 0.85rem;
+      }
+    }
+
+    .profile-menu {
+      position: absolute;
+      right: 0;
+      top: 120%;
+      width: 200px;
+      background-color: $bg-card;
+      border: 1px solid $border-color;
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      z-index: 50;
+
+      .menu-header {
+        .user-title {
+          font-size: 0.875rem;
+          font-weight: 600;
+          color: $text-primary;
+          margin: 0;
+        }
+        .user-email {
+          font-size: 0.75rem;
+          color: $text-muted;
+          margin: 0;
+        }
+      }
+
+      .menu-divider {
+        height: 1px;
+        background-color: $border-color;
+        margin: 0.5rem 0;
+      }
+
+      .logout-btn {
+        width: 100%;
+        text-align: left;
+        background: transparent;
+        border: none;
+        color: #ff4d4d;
+        font-size: 0.85rem;
+        padding: 0.3rem 0;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+// ── Custom Dark Error Alert Box ───────────────────────────────────────────────
+.custom-error-box {
+  width: 100%;
+  max-width: 900px;
+  background-color: rgba(255, 45, 120, 0.1);
+  border: 1px solid rgba(255, 45, 120, 0.4);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .error-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    p {
+      margin: 0;
+      font-size: 0.875rem;
+      color: #ff6b9d;
+    }
+  }
+
+  .close-btn {
+    background: transparent;
+    border: none;
+    color: $text-muted;
+    cursor: pointer;
+    font-size: 1rem;
+
+    &:hover {
+      color: $text-primary;
+    }
+  }
+}
+
+// ── Uploaded File Card Display ────────────────────────────────────────────────
+.uploaded-file-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $bg-input;
+  border: 1px solid $accent;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+
+  .file-details {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    .file-icon {
+      font-size: 1.25rem;
+    }
+
+    .file-text {
+      display: flex;
+      flex-direction: column;
+
+      .file-name {
+        margin: 0;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: $text-primary;
+        max-width: 220px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .file-size {
+        font-size: 0.75rem;
+        color: $text-muted;
+      }
+    }
+  }
+
+  .remove-btn {
+    background-color: rgba(255, 77, 77, 0.15);
+    border: 1px solid rgba(255, 77, 77, 0.3);
+    color: #ff4d4d;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.3rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: rgba(255, 77, 77, 0.3);
+    }
+  }
+}
+
+.interview-card__footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  .custom-error-box {
+    width: 100%;
+  }
+
+  .footer-action-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+/* Highlights the job description textarea red when missing */
+.panel__textarea.input-error {
+  border-color: #ff4d4d !important;
+  box-shadow: 0 0 0 2px rgba(255, 77, 77, 0.2);
+}
