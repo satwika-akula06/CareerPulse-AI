@@ -591,3 +591,25 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
   border-color: #ff4d4d !important;
   box-shadow: 0 0 0 2px rgba(255, 77, 77, 0.2);
 }
+
+.navbar__brand-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; // Aligns text to the left
+}
+
+.navbar__brand {
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.navbar__tagline {
+    font-size: 0.75rem;   /* Smaller font size */
+    font-weight: 300;     /* Thin font weight */
+    margin: 0;
+    margin-top: 2px;      /* Slight spacing below the title */
+    opacity: 0.8;         /* Subtle muted look */
+    line-height: 1;
+}

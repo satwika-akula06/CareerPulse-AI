@@ -18,3 +18,10 @@ body,
 .highlight{
     color: #d20d3b;
 }
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 10px;
+  }
+}
