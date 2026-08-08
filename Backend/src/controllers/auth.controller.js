@@ -3,6 +3,13 @@ const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const tokenBlacklistModel = require("../models/blacklist.model")
 
+// Production-ready cookie options
+const cookieOptions = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production", // Requires HTTPS in production
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Allows cross-site cookies
+    maxAge: 24 * 60 * 60 * 1000 // 1 day
+}
 
 /**
  * @name registerUserController
@@ -29,21 +36,22 @@ async function registerUserController(req, res){
         })
     }
 
-    const hash=await bcrypt.hash(password, 10)
+    const hash = await bcrypt.hash(password, 10)
 
-    const user=await userModel.create({
+    const user = await userModel.create({
         username,
         email,
         password: hash
     })
 
-    const token=jwt.sign(
-        {id:user._id, username:user.username}, 
+    const token = jwt.sign(
+        {id: user._id, username: user.username}, 
         process.env.JWT_SECRET,
-        {expiresIn:"1d"}
+        {expiresIn: "1d"}
     )
 
-    res.cookie("token", token)
+    // Set cookie with production options
+    res.cookie("token", token, cookieOptions)
 
     res.status(201).json({  
         message: "User registered successfully",
@@ -53,9 +61,7 @@ async function registerUserController(req, res){
             email: user.email
         }
     })
-   
 }
- 
 
 /**
  * @name loginUserController
@@ -74,7 +80,6 @@ async function loginUserController(req, res) {
 
         const user = await userModel.findOne({ email });
 
-        // 1. Return 404 if email is not found
         if (!user) {
             return res.status(404).json({
                 message: "User not found. Please register first."
@@ -83,7 +88,6 @@ async function loginUserController(req, res) {
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
-        // 2. Return 400 if password does not match
         if (!isPasswordValid) {
             return res.status(400).json({
                 message: "Incorrect password. Please try again."
@@ -96,7 +100,9 @@ async function loginUserController(req, res) {
             { expiresIn: "1d" }
         );
 
-        res.cookie("token", token);
+        // Set cookie with production options
+        res.cookie("token", token, cookieOptions);
+
         return res.status(200).json({
             message: "User logged in successfully",
             user: {
@@ -119,18 +125,19 @@ async function loginUserController(req, res) {
  * @access Public       
  */
 async function logoutUserController(req, res){
-    const token = req.cookies.token
-    if(!token){
-        await tokenBlacklistModel.create({token})
+    const token = req.cookies.token;
+    
+    if (token) {
+        await tokenBlacklistModel.create({ token });
     }
 
-    res.clearCookie("token")
+    // Clear cookie passing the same options
+    res.clearCookie("token", cookieOptions);
 
     res.status(200).json({
         message: "User logged out successfully"
-    })
+    });
 }
-
 
 /**
  * @name getMeController
@@ -138,8 +145,6 @@ async function logoutUserController(req, res){
  * @access Private
  */
 async function getMeController(req, res){
-
-
     const user = await userModel.findById(req.user.id)
 
     res.status(200).json({
@@ -148,10 +153,8 @@ async function getMeController(req, res){
             id: user._id,
             username: user.username,
             email: user.email
-
         }
-        
     })
 }
 
-module.exports={registerUserController, loginUserController, logoutUserController, getMeController}
+module.exports = { registerUserController, loginUserController, logoutUserController, getMeController }
