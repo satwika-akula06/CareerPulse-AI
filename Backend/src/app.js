@@ -4,6 +4,9 @@ const cors = require("cors")
 
 const app = express()
 
+// CRITICAL FOR RENDER DEPLOYMENT: Trust proxy to allow HTTPS cross-site cookies
+app.set("trust proxy", 1)
+
 app.use(express.json())
 app.use(cookieParser())
 
