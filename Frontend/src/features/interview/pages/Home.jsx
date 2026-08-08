@@ -95,7 +95,8 @@ const Home = () => {
 
             {/* Top Navigation Bar */}
             <nav className='navbar'>
-                <div className='navbar__brand'>GenAI Interviewer</div>
+                <div className='navbar__brand'>CareerPulse AI  </div>
+                <p className='navbar__tagline'>Career Readiness & Skill Analysis</p>
                 <div className='navbar__user'>
                     {user ? (
                         <div className='profile-dropdown'>
